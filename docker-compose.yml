@@ -1,0 +1,28 @@
+version: '3.0'
+
+services:
+  zap:
+    image: owasp/zap2docker-stable
+    ports:
+      - '3333:8080'
+      - '8090:8090'
+    command: bash -c 'zap-webswing.sh'
+    container_name: zap
+    volumes:
+      - ./volumes/reports:/volumes/report:rw
+
+  # # https://github.com/infobyte/faraday/wiki/Installation-Docker
+  # faraday:
+  #   # image: infobyte/faraday
+  #   build: ./containers/faraday
+  #   volumes:
+  #     - ./volumes/report/workspace:/root/.faraday/report/workspace/:rw
+  #   ports:
+  #     - '5984:5984'
+  #     - '5985:5985'
+  #   command: bash -c '/root/run.sh'
+  #   # ~/faraday/faraday.py --cli --workspace zap --report /root/.faraday/report/workspace/report.xml
+
+volumes:
+  data:
+    driver: 'local'
